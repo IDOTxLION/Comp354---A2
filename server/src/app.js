@@ -1,4 +1,5 @@
 import express from 'express';
+import { orderStatusRoutes } from './routes/order-status.js';
 
 // Builds the API around a database, so tests can pass an in-memory one.
 export function createApp(db) {
@@ -11,6 +12,8 @@ export function createApp(db) {
   });
 
   // Feature routes go here, e.g. app.get('/api/restaurants', ...)
+
+  app.use('/api', orderStatusRoutes(db));
 
   return app;
 }
