@@ -15,7 +15,7 @@ labels: defect
 
 ## Acceptance criteria
 
-- [ ] Given ..., when ..., then ...
+- [ ]
 
 ## Details
 
