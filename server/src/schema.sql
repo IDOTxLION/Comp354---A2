@@ -17,3 +17,22 @@ CREATE TABLE IF NOT EXISTS menu_items (
   price_cents   INTEGER NOT NULL,
   available     INTEGER NOT NULL DEFAULT 1
 );
+
+CREATE TABLE IF NOT EXISTS orders (
+  id            INTEGER PRIMARY KEY,
+  restaurant_id INTEGER NOT NULL REFERENCES restaurants(id),
+  customer_name TEXT    NOT NULL,
+  pickup_time   TEXT    NOT NULL,
+  status        TEXT    NOT NULL DEFAULT 'Received'
+                CHECK (status IN ('Received', 'Preparing', 'Ready for Pickup', 'Completed', 'Cancelled')),
+  total_cents   INTEGER NOT NULL,
+  created_at    TEXT    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id               INTEGER PRIMARY KEY,
+  order_id         INTEGER NOT NULL REFERENCES orders(id),
+  menu_item_id     INTEGER NOT NULL REFERENCES menu_items(id),
+  quantity         INTEGER NOT NULL,
+  unit_price_cents INTEGER NOT NULL
+);
