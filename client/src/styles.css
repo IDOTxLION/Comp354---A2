@@ -23,3 +23,16 @@ main {
   margin: 0 auto;
   padding: 1.5rem;
 }
+
+.restaurants {
+  list-style: none;
+  padding: 0;
+}
+
+.restaurants li {
+  margin-bottom: 0.75rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #e3e3dc;
+  border-radius: 6px;
+}

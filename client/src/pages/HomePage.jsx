@@ -28,12 +28,13 @@ function RestaurantList({ restaurants, error }) {
   const now = new Date().toTimeString().slice(0, 5);
 
   return (
-    <ul>
+    <ul className="restaurants">
       {restaurants.map((restaurant) => (
         <li key={restaurant.id}>
           <Link to={`/restaurants/${restaurant.id}`}>{restaurant.name}</Link>
-          {' '}{restaurant.cuisine}, {restaurant.opens_at} to {restaurant.closes_at}
           {isClosed(restaurant, now) && <strong> Closed</strong>}
+          <div>{restaurant.cuisine}</div>
+          <div>{restaurant.opens_at} to {restaurant.closes_at}</div>
         </li>
       ))}
     </ul>
