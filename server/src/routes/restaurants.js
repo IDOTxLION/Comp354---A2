@@ -12,7 +12,7 @@ export function restaurantRoutes(db) {
 
   router.get('/restaurants/:id', (req, res) => {
     const restaurant = db
-      .prepare('SELECT id, name, cuisine, opens_at, closes_at FROM restaurants WHERE id = ?')
+      .prepare('SELECT id, name, cuisine, opens_at, closes_at, prep_minutes FROM restaurants WHERE id = ?')
       .get(req.params.id);
     if (!restaurant) return res.status(404).json({ error: 'Restaurant not found' });
 

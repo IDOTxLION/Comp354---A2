@@ -45,6 +45,7 @@ test('GET /api/restaurants/:id returns the restaurant with its menu', async (t) 
   const restaurant = await res.json();
   assert.equal(restaurant.name, 'Casse-Croûte Saint-Denis');
   assert.equal(restaurant.opens_at, '11:00');
+  assert.equal(restaurant.prep_minutes, 20);
   assert.equal(restaurant.menu.length, 4);
   assert.deepEqual(restaurant.menu[0], {
     id: 1, name: 'Classic Poutine', description: 'Fries, cheese curds, brown gravy', category: 'Mains', price_cents: 1150,
