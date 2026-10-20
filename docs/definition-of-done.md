@@ -14,8 +14,8 @@ A Product Backlog Item is **Done** only when every item below is true.
 
 ## Testing
 - [ ] New server logic has automated tests.
-- [ ] New UI behaviour that the acceptance criteria depend on has a component test, or a manual test is written in the PR.
-- [ ] All tests pass in CI..
+- [ ] UI changes are tested by hand, with the steps written in the PR under "How to test".
+- [ ] All tests pass in CI.
 
 ## Integration
 - [ ] The pull request is squash-merged into `main`.
