@@ -31,10 +31,12 @@ function RestaurantList({ restaurants, error }) {
     <ul className="restaurants">
       {restaurants.map((restaurant) => (
         <li key={restaurant.id}>
-          <Link to={`/restaurants/${restaurant.id}`}>{restaurant.name}</Link>
-          {isClosed(restaurant, now) && <strong> Closed</strong>}
-          <div>{restaurant.cuisine}</div>
-          <div>{restaurant.opens_at} to {restaurant.closes_at}</div>
+          <Link to={`/restaurants/${restaurant.id}`}>
+            <strong>{restaurant.name}</strong>
+            <div>{restaurant.cuisine}</div>
+            <div>{restaurant.opens_at} to {restaurant.closes_at}</div>
+            {isClosed(restaurant, now) && <div className="closed">Closed</div>}
+          </Link>
         </li>
       ))}
     </ul>
