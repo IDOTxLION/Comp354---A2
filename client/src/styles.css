@@ -58,3 +58,17 @@ main {
 .closed {
   color: #b42318;
 }
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e3e3dc;
+}
+
+.menu li div {
+  color: #57606a;
+}

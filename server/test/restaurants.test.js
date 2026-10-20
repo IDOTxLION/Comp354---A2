@@ -34,3 +34,40 @@ test('GET /api/restaurants returns an empty list when there are no restaurants',
   assert.equal(res.status, 200);
   assert.deepEqual(await res.json(), []);
 });
+
+test('GET /api/restaurants/:id returns the restaurant with its menu', async (t) => {
+  const db = openDb(':memory:');
+  seed(db);
+  const url = startServer(t, db);
+
+  const res = await fetch(`${url}/api/restaurants/1`);
+  assert.equal(res.status, 200);
+  const restaurant = await res.json();
+  assert.equal(restaurant.name, 'Casse-Croûte Saint-Denis');
+  assert.equal(restaurant.opens_at, '11:00');
+  assert.equal(restaurant.menu.length, 4);
+  assert.deepEqual(restaurant.menu[0], {
+    id: 1, name: 'Classic Poutine', description: 'Fries, cheese curds, brown gravy', category: 'Mains', price_cents: 1150,
+  });
+});
+
+test('GET /api/restaurants/:id leaves out unavailable items', async (t) => {
+  const db = openDb(':memory:');
+  seed(db);
+  db.prepare('UPDATE menu_items SET available = 0 WHERE id = 1').run();
+  const url = startServer(t, db);
+
+  const restaurant = await (await fetch(`${url}/api/restaurants/1`)).json();
+  assert.equal(restaurant.menu.length, 3);
+  assert.ok(restaurant.menu.every((item) => item.id !== 1));
+});
+
+test('GET /api/restaurants/:id returns 404 for an unknown restaurant', async (t) => {
+  const db = openDb(':memory:');
+  seed(db);
+  const url = startServer(t, db);
+
+  const res = await fetch(`${url}/api/restaurants/99`);
+  assert.equal(res.status, 404);
+  assert.deepEqual(await res.json(), { error: 'Restaurant not found' });
+});
