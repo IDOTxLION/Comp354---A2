@@ -15,4 +15,6 @@ npm run client   # app on http://localhost:5173
 
 The database is created with sample restaurants on first start. `npm test` runs the API tests.
 
+The API and the client pages are described in [docs/api.md](docs/api.md).
+
 See [docs/definition-of-done.md](docs/definition-of-done.md) and [docs/daily-scrum/](docs/daily-scrum/).
