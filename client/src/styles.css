@@ -34,7 +34,9 @@ main {
 
 .restaurants a {
   display: block;
-  padding: 1rem;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 1.25rem;
   color: #57606a;
   text-decoration: none;
   background: white;
