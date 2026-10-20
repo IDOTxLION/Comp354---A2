@@ -19,7 +19,7 @@ A Product Backlog Item is **Done** only when every item below is true.
 
 ## Integration
 - [ ] The pull request is squash-merged into `main`.
-- [ ] The app still starts from a fresh clone of `main` with `npm install` and `npm run dev`, using the seed data.
+- [ ] The app still starts from a fresh clone of `main` with `npm install`, `npm run server` and `npm run client`, using the data.
 - [ ] No known defects in the feature. Any defect found but not fixed is logged as a new issue.
 
 ## Documentation and tracking
