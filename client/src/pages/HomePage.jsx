@@ -1,20 +1,48 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-// Placeholder: PBI-01 replaces this with the restaurant list.
 export default function HomePage() {
-  const [message, setMessage] = useState('Connecting to the server...');
+  const [restaurants, setRestaurants] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('/api/health')
+    fetch('/api/restaurants')
       .then((res) => res.json())
-      .then((data) => setMessage(`Server is up with ${data.restaurants} restaurants.`))
-      .catch(() => setMessage('Could not reach the server.'));
+      .then(setRestaurants)
+      .catch(() => setError('Could not load restaurants.'));
   }, []);
 
   return (
     <>
-      <h1>Order ahead, pick up on time</h1>
-      <p>{message}</p>
+      <h1>Restaurants</h1>
+      <RestaurantList restaurants={restaurants} error={error} />
     </>
   );
+}
+
+function RestaurantList({ restaurants, error }) {
+  if (error) return <p>{error}</p>;
+  if (!restaurants) return <p>Loading...</p>;
+  if (restaurants.length === 0) return <p>No restaurants available yet.</p>;
+
+  const now = new Date().toTimeString().slice(0, 5);
+
+  return (
+    <ul className="restaurants">
+      {restaurants.map((restaurant) => (
+        <li key={restaurant.id}>
+          <Link to={`/restaurants/${restaurant.id}`}>
+            <strong>{restaurant.name}</strong>
+            <div>{restaurant.cuisine}</div>
+            <div>{restaurant.opens_at} to {restaurant.closes_at}</div>
+            {isClosed(restaurant, now) && <div className="closed">Closed</div>}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function isClosed(restaurant, now) {
+  return now < restaurant.opens_at || now >= restaurant.closes_at;
 }

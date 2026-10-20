@@ -1,5 +1,6 @@
 import express from 'express';
 import { orderStatusRoutes } from './routes/order-status.js';
+import { restaurantRoutes } from './routes/restaurants.js';
 
 // Builds the API around a database, so tests can pass an in-memory one.
 export function createApp(db) {
@@ -11,7 +12,7 @@ export function createApp(db) {
     res.json({ status: 'ok', restaurants: n });
   });
 
-  // Feature routes go here, e.g. app.get('/api/restaurants', ...)
+  app.use('/api', restaurantRoutes(db));
 
   app.use('/api', orderStatusRoutes(db));
 
