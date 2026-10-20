@@ -5,7 +5,7 @@
 
 ## Progress toward the Sprint Goal
 
-<!-- Where the team stands against the goal, not a list of what each person did. -->
+<!-- The general progress towards the goal-->
 
 ## Work to do next
 

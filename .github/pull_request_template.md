@@ -1,12 +1,12 @@
 ## What this changes
 
-<!-- One or two sentences. -->
+<!-- Short explanation -->
 
 Closes #
 
 ## How to test
 
-<!-- Steps a reviewer can follow, e.g. "npm run dev, open /restaurants/1, add two items..." -->
+<!-- Steps a reviewer can follow -->
 
 1.
 
@@ -15,7 +15,7 @@ Closes #
 - [ ] All acceptance criteria on the issue are met
 - [ ] Tests added or updated for new logic
 - [ ] CI is green
-- [ ] App runs from a fresh clone (`npm install`, `npm run dev`)
+- [ ] App runs from a fresh clone
 - [ ] README updated if setup, scripts or endpoints changed
 - [ ] Reviewer assigned
 
