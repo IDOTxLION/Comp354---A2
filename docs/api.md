@@ -80,7 +80,7 @@ Request:
 Rules, all checked on the server:
 - `customer_name` is not empty.
 - `items` is not empty, every quantity is a whole number of at least 1, and every item is available and belongs to `restaurant_id`.
-- `pickup_time` is at least 15 minutes from now, and between the restaurant's `opens_at` and `closes_at` (both included).
+- `pickup_time` is at least the restaurant's `prep_minutes` from now (PBI-13), and between the restaurant's `opens_at` and `closes_at` (both included).
 - The total is calculated from the prices in the database. The client never sends a total.
 
 `201` `{ "id": 7 }`. The checkout page then opens `/orders/7`.
