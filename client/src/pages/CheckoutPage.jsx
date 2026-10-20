@@ -15,7 +15,7 @@ function toTime(minutes) {
 
 function pickupTimes(restaurant) {
   const now = new Date();
-  const earliest = now.getHours() * 60 + now.getMinutes() + 15;
+  const earliest = now.getHours() * 60 + now.getMinutes() + restaurant.prep_minutes;
   const times = [];
   for (let m = toMinutes(restaurant.opens_at); m <= toMinutes(restaurant.closes_at); m += 15) {
     if (m >= earliest) times.push(toTime(m));
@@ -80,6 +80,7 @@ export default function CheckoutPage() {
     <>
       <h1>Checkout</h1>
       <p>{restaurant.name}</p>
+      <p>This restaurant needs about {restaurant.prep_minutes} minutes to prepare your order.</p>
       <ul>
         {order.items.map((i) => (
           <li key={i.menu_item_id}>
