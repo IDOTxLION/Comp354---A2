@@ -72,3 +72,7 @@ main {
 .menu li div {
   color: #57606a;
 }
+
+.error {
+  color: #c92a2a;
+}
