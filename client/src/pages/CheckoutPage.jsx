@@ -35,10 +35,7 @@ export default function CheckoutPage() {
     if (!order.restaurant_id) return;
     fetch(`/api/restaurants/${order.restaurant_id}`)
       .then((res) => res.json())
-      .then((data) => {
-        setRestaurant(data);
-        setPickupTime(pickupTimes(data)[0] ?? '');
-      });
+      .then((data) => setRestaurant(data));
   }, [order.restaurant_id]);
 
   if (order.items.length === 0) {
@@ -54,6 +51,7 @@ export default function CheckoutPage() {
   if (!restaurant) return <p>Loading...</p>;
 
   const times = pickupTimes(restaurant);
+  const selectedTime = times.includes(pickupTime) ? pickupTime : times[0] ?? '';
   const total = order.items.reduce((sum, i) => sum + i.price_cents * i.quantity, 0);
 
   async function placeOrder(event) {
@@ -65,7 +63,7 @@ export default function CheckoutPage() {
       body: JSON.stringify({
         restaurant_id: order.restaurant_id,
         customer_name: name,
-        pickup_time: pickupTime,
+        pickup_time: selectedTime,
         items: order.items.map((i) => ({ menu_item_id: i.menu_item_id, quantity: i.quantity })),
       }),
     });
@@ -99,7 +97,7 @@ export default function CheckoutPage() {
         <p>
           <label>
             Pickup time{' '}
-            <select value={pickupTime} onChange={(e) => setPickupTime(e.target.value)}>
+            <select value={selectedTime} onChange={(e) => setPickupTime(e.target.value)}>
               {times.map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
