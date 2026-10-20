@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1f2328;
+  background: #fafaf7;
+}
+
+header {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border-bottom: 1px solid #e3e3dc;
+}
+
+header a {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #d9480f;
+  text-decoration: none;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
