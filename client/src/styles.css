@@ -23,3 +23,7 @@ main {
   margin: 0 auto;
   padding: 1.5rem;
 }
+
+.error {
+  color: #c92a2a;
+}
