@@ -17,4 +17,9 @@ The database is created with sample restaurants on first start. `npm test` runs 
 
 The API and the client pages are described in [docs/api.md](docs/api.md).
 
+## Endpoints
+
+- `GET /api/restaurants`: all restaurants with their cuisine and opening hours, sorted by name.
+- `GET /api/restaurants/:id`: one restaurant with its available menu items. `404` if it does not exist.
+
 See [docs/definition-of-done.md](docs/definition-of-done.md) and [docs/daily-scrum/](docs/daily-scrum/).

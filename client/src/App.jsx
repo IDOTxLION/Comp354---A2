@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from 'react-router-dom';
 import HomePage from './pages/HomePage.jsx';
+import MenuPage from './pages/MenuPage.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
 
 export default function App() {
@@ -9,9 +10,9 @@ export default function App() {
         <Link to="/">QuickBite</Link>
       </header>
       <main>
-        {/* Each feature adds its page here, e.g. <Route path="/restaurants/:id" element={<MenuPage />} /> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/restaurants/:id" element={<MenuPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </main>
