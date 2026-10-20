@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { formatPrice } from '../format.js';
+import { useOrder } from '../OrderContext.jsx';
+import OrderSummary from '../OrderSummary.jsx';
 
 export default function MenuPage() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [error, setError] = useState('');
+  const { addItem } = useOrder();
 
   useEffect(() => {
     fetch(`/api/restaurants/${id}`)
@@ -34,13 +37,15 @@ export default function MenuPage() {
           <ul className="menu">
             {group.items.map((item) => (
               <li key={item.id}>
-                <strong>{item.name}</strong> {formatPrice(item.price_cents)}
+                <strong>{item.name}</strong> {formatPrice(item.price_cents)}{' '}
+                <button onClick={() => addItem(restaurant.id, item)}>Add</button>
                 <div>{item.description}</div>
               </li>
             ))}
           </ul>
         </section>
       ))}
+      <OrderSummary />
     </>
   );
 }
