@@ -1,4 +1,4 @@
-# Daily Scrum 3: 2026-10-20 19:20
+# Daily Scrum 3: 2026-10-21 10:20
 
 **Attendees:** Aaleen (SM), William (PO), Marco, Rushan
 **Sprint Goal:** A customer can browse a restaurant's menu and place a pickup order for a valid time, then follow its status while restaurant staff move it from Received to Completed.
