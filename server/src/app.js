@@ -1,4 +1,5 @@
 import express from 'express';
+import { orderStatusRoutes } from './routes/order-status.js';
 import { restaurantRoutes } from './routes/restaurants.js';
 import { orderRoutes } from './routes/orders.js';
 
@@ -14,6 +15,8 @@ export function createApp(db) {
 
   app.use('/api', restaurantRoutes(db));
   app.use('/api', orderRoutes(db));
+
+  app.use('/api', orderStatusRoutes(db));
 
   return app;
 }
