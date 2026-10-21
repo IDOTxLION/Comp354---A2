@@ -14,7 +14,7 @@ Most of the Sprint Goal is on main. PBI-01 to PBI-04 and PBI-06 are merged: a cu
 | Rushan | Finish the order status page (PBI-05) and open the PR. Then run the full flow check on main with William (#39). |
 | Marco | Review Rushan's PBI-05 PR. Then help test the full flow, including the new preparation times. |
 | William | Accept PBI-05. Run the full flow check with Rushan, then prepare the demo for the Sprint Review. |
-| Aaleen | Review Rushan's PBI-05 PR. Prepare the Sprint Review and the Retrospective, and take the board screenshots. |
+| Aaleen | Review Rushan's PBI-05 PR. Prepare the Sprint Review and the Retrospective, and take the board screenshots. | 
 
 ## Impediments
 
