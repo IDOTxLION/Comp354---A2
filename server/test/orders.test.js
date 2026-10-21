@@ -6,7 +6,8 @@ import { seed } from '../src/seed.js';
 import { orderRoutes, pickupTimeError } from '../src/routes/orders.js';
 
 const noon = new Date(2026, 9, 21, 12, 0);
-const casseCroute = { opens_at: '11:00', closes_at: '22:00' };
+const casseCroute = { opens_at: '11:00', closes_at: '22:00', prep_minutes: 20 };
+const greenBowl = { opens_at: '07:30', closes_at: '15:00', prep_minutes: 10 };
 
 function startServer(t, now = noon) {
   const db = openDb(':memory:');
@@ -33,15 +34,21 @@ const validOrder = {
   items: [{ menu_item_id: 1, quantity: 2 }, { menu_item_id: 2, quantity: 1 }],
 };
 
-test('pickup time at least 15 minutes away and within opening hours is valid', () => {
-  assert.equal(pickupTimeError('12:15', casseCroute, noon), null);
+test('pickup time at least the preparation time away and within opening hours is valid', () => {
+  assert.equal(pickupTimeError('12:20', casseCroute, noon), null);
   assert.equal(pickupTimeError('22:00', casseCroute, noon), null);
   assert.equal(pickupTimeError('11:00', casseCroute, new Date(2026, 9, 21, 10, 0)), null);
 });
 
-test('pickup time in the past or less than 15 minutes away is rejected', () => {
-  assert.match(pickupTimeError('11:30', casseCroute, noon), /15 minutes/);
-  assert.match(pickupTimeError('12:14', casseCroute, noon), /15 minutes/);
+test('pickup time in the past or sooner than the preparation time is rejected', () => {
+  assert.match(pickupTimeError('11:30', casseCroute, noon), /20 minutes/);
+  assert.match(pickupTimeError('12:19', casseCroute, noon), /20 minutes/);
+});
+
+test('each restaurant uses its own preparation time', () => {
+  assert.equal(pickupTimeError('12:10', greenBowl, noon), null);
+  assert.match(pickupTimeError('12:09', greenBowl, noon), /10 minutes/);
+  assert.match(pickupTimeError('12:10', casseCroute, noon), /20 minutes/);
 });
 
 test('pickup time outside opening hours is rejected', () => {
@@ -80,12 +87,21 @@ test('POST /api/orders ignores a total sent by the client', async (t) => {
   assert.equal(db.prepare('SELECT total_cents FROM orders WHERE id = ?').get(id).total_cents, 3775);
 });
 
-test('POST /api/orders rejects a pickup time too soon', async (t) => {
+test('POST /api/orders rejects a pickup time sooner than the restaurant preparation time', async (t) => {
   const { placeOrder, orderCount } = startServer(t);
-  const res = await placeOrder({ ...validOrder, pickup_time: '12:10' });
+  const res = await placeOrder({ ...validOrder, pickup_time: '12:15' });
   assert.equal(res.status, 400);
-  assert.match((await res.json()).error, /15 minutes/);
+  assert.match((await res.json()).error, /20 minutes/);
   assert.equal(orderCount(), 0);
+});
+
+test('POST /api/orders uses the preparation time of the chosen restaurant', async (t) => {
+  const { placeOrder } = startServer(t);
+  const res = await placeOrder({
+    restaurant_id: 3, customer_name: 'Sam', pickup_time: '12:10',
+    items: [{ menu_item_id: 9, quantity: 1 }],
+  });
+  assert.equal(res.status, 201);
 });
 
 test('POST /api/orders rejects a pickup time outside opening hours', async (t) => {

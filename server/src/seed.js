@@ -1,7 +1,7 @@
 // Fictional sample restaurants. Menu items: [name, description, category, price in cents].
 const RESTAURANTS = [
   {
-    name: 'Casse-Croûte Saint-Denis', cuisine: 'Québécois', opens_at: '11:00', closes_at: '22:00',
+    name: 'Casse-Croûte Saint-Denis', cuisine: 'Québécois', opens_at: '11:00', closes_at: '22:00', prep_minutes: 20,
     menu: [
       ['Classic Poutine', 'Fries, cheese curds, brown gravy', 'Mains', 1150],
       ['Smoked Meat Sandwich', 'On rye with mustard', 'Mains', 1475],
@@ -10,7 +10,7 @@ const RESTAURANTS = [
     ],
   },
   {
-    name: 'Little Saigon Kitchen', cuisine: 'Vietnamese', opens_at: '10:30', closes_at: '21:00',
+    name: 'Little Saigon Kitchen', cuisine: 'Vietnamese', opens_at: '10:30', closes_at: '21:00', prep_minutes: 15,
     menu: [
       ['Beef Pho', 'Rice noodles, rare beef, herbs', 'Mains', 1395],
       ['Lemongrass Chicken Banh Mi', 'Pickled vegetables, cilantro', 'Mains', 995],
@@ -19,7 +19,7 @@ const RESTAURANTS = [
     ],
   },
   {
-    name: 'Green Bowl', cuisine: 'Vegetarian', opens_at: '07:30', closes_at: '15:00',
+    name: 'Green Bowl', cuisine: 'Vegetarian', opens_at: '07:30', closes_at: '15:00', prep_minutes: 10,
     menu: [
       ['Falafel Bowl', 'Quinoa, hummus, pickled onions', 'Mains', 1395],
       ['Tofu Poke Bowl', 'Rice, edamame, sesame', 'Mains', 1450],
@@ -31,13 +31,13 @@ const RESTAURANTS = [
 
 export function seed(db) {
   const addRestaurant = db.prepare(
-    'INSERT INTO restaurants (name, cuisine, opens_at, closes_at) VALUES (?, ?, ?, ?)'
+    'INSERT INTO restaurants (name, cuisine, opens_at, closes_at, prep_minutes) VALUES (?, ?, ?, ?, ?)'
   );
   const addItem = db.prepare(
     'INSERT INTO menu_items (restaurant_id, name, description, category, price_cents) VALUES (?, ?, ?, ?, ?)'
   );
   for (const r of RESTAURANTS) {
-    const { lastInsertRowid } = addRestaurant.run(r.name, r.cuisine, r.opens_at, r.closes_at);
+    const { lastInsertRowid } = addRestaurant.run(r.name, r.cuisine, r.opens_at, r.closes_at, r.prep_minutes);
     for (const [name, description, category, price] of r.menu) {
       addItem.run(lastInsertRowid, name, description, category, price);
     }

@@ -12,6 +12,8 @@ The API contract so that everything is consistant with each other. If something 
 
 ## Database
 
+`restaurants` has a `prep_minutes` column (PBI-13): the restaurant's minimum preparation time in minutes.
+
 ```sql
 CREATE TABLE IF NOT EXISTS orders (
   id            INTEGER PRIMARY KEY,
@@ -49,11 +51,11 @@ CREATE TABLE IF NOT EXISTS order_items (
 
 ### `GET /api/restaurants/:id` (PBI-02)
 
-`200`, with only available menu items (`available = 1`):
+`200`, with only available menu items (`available = 1`). `prep_minutes` is how many minutes the restaurant needs to prepare an order (PBI-13):
 
 ```json
 {
-  "id": 1, "name": "Casse-Croûte Saint-Denis", "cuisine": "Québécois", "opens_at": "11:00", "closes_at": "22:00",
+  "id": 1, "name": "Casse-Croûte Saint-Denis", "cuisine": "Québécois", "opens_at": "11:00", "closes_at": "22:00", "prep_minutes": 20,
   "menu": [
     { "id": 1, "name": "Classic Poutine", "description": "Fries, cheese curds, brown gravy", "category": "Mains", "price_cents": 1150 }
   ]
@@ -78,7 +80,7 @@ Request:
 Rules, all checked on the server:
 - `customer_name` is not empty.
 - `items` is not empty, every quantity is a whole number of at least 1, and every item is available and belongs to `restaurant_id`.
-- `pickup_time` is at least 15 minutes from now, and between the restaurant's `opens_at` and `closes_at` (both included).
+- `pickup_time` is at least the restaurant's `prep_minutes` from now (PBI-13), and between the restaurant's `opens_at` and `closes_at` (both included).
 - The total is calculated from the prices in the database. The client never sends a total.
 
 `201` `{ "id": 7 }`. The checkout page then opens `/orders/7`.

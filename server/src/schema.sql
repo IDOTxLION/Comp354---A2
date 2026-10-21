@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS restaurants (
   name      TEXT NOT NULL,
   cuisine   TEXT NOT NULL,
   opens_at  TEXT NOT NULL,  -- 'HH:MM'
-  closes_at TEXT NOT NULL   -- 'HH:MM'
+  closes_at TEXT NOT NULL,  -- 'HH:MM'
+  prep_minutes INTEGER NOT NULL DEFAULT 15
 );
 
 CREATE TABLE IF NOT EXISTS menu_items (

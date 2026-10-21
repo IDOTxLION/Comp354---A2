@@ -11,8 +11,8 @@ export function pickupTimeError(pickupTime, restaurant, now) {
   }
   const pickup = toMinutes(pickupTime);
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  if (pickup < nowMinutes + 15) {
-    return 'Pickup time must be at least 15 minutes from now';
+  if (pickup < nowMinutes + restaurant.prep_minutes) {
+    return `Pickup time must be at least ${restaurant.prep_minutes} minutes from now`;
   }
   if (pickup < toMinutes(restaurant.opens_at) || pickup > toMinutes(restaurant.closes_at)) {
     return `Pickup time must be between ${restaurant.opens_at} and ${restaurant.closes_at}`;
